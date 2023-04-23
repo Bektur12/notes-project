@@ -49,5 +49,6 @@ const InputStyled = styled(TextField)(() => ({
   },
   " & .MuiInputBase-root": {
     outline: "none",
+    background: "#FEFBFF",
   },
 }));
