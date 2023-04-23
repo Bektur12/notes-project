@@ -29,6 +29,7 @@ const InputStyled = styled(TextField)(() => ({
     border: "1px solid #D9D9D9",
   },
   " & .MuiInputBase-root": {
+    background: "#FEFBFF",
     outline: "none",
   },
 }));
