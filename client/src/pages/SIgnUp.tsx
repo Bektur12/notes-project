@@ -4,18 +4,14 @@ import { Input } from "../components/UI/Input";
 import { InputPassword } from "../components/UI/InputPassword";
 import { Button } from "../components/UI/Button";
 
-export const SignIn = () => {
+export const SignUp = () => {
   return (
     <Container>
       <InnerContainer>
-        <Title>Login</Title>
+        <Title>Sign Up</Title>
         <Input type="email" />
         <InputPassword label="Password" />
-        <Button variant="contained">Login</Button>
-        <SignUp>
-          <p>У вас есть аккаунт?</p>
-          <a href="/">Sign Up</a>
-        </SignUp>
+        <Button variant="contained">Sign Up</Button>
       </InnerContainer>
     </Container>
   );
@@ -45,28 +41,4 @@ const Title = styled("h1")`
   font-weight: 900;
   font-size: 24px;
   line-height: 29px;
-`;
-
-const SignUp = styled("div")`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #ffffff;
-  font-size: 14px;
-  margin-top: 16px;
-
-  & > p {
-    margin: 0;
-  }
-
-  & > a {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: bold;
-    margin-left: 4px;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 `;
