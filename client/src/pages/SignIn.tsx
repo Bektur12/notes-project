@@ -13,8 +13,8 @@ export const SignIn = () => {
         <InputPassword label="Password" />
         <Button variant="contained">Login</Button>
         <SignUp>
-          <p>У вас есть аккаунт?</p>
-          <a href="/">Sign Up</a>
+          <p>Зарегистрироваться</p>
+        
         </SignUp>
       </InnerContainer>
     </Container>
