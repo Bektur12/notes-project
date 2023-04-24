@@ -3,6 +3,9 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entity/user.entity';
 
+import { config } from 'dotenv';
+config();
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
