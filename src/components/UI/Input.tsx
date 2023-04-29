@@ -1,21 +1,40 @@
 import React, { FC } from "react";
-import { TextField, TextFieldProps } from "@mui/material";
+import { InputAdornment, TextField, TextFieldProps } from "@mui/material";
+import { ReactComponent as SearchIcon } from "../../assets/svg/searchIcon.svg";
+
 import styled from "@emotion/styled";
 
-type InputProps = TextFieldProps & {};
+type InputProps = TextFieldProps & {
+  isIcon?: boolean;
+};
 
 export const Input: FC<InputProps> = ({
   value,
   onChange,
   type,
   placeholder,
+  isIcon,
 }) => {
+  const viewIconHandler = () => {
+    if (isIcon === true) {
+      return {
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchIcon />
+          </InputAdornment>
+        ),
+      };
+    }
+  };
+
   return (
     <InputStyled
       value={value}
       onChange={onChange}
       type={type}
+      fullWidth
       placeholder={placeholder}
+      InputProps={viewIconHandler()}
     />
   );
 };

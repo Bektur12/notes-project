@@ -1,8 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { SignIn } from "../pages/SignIn";
-import { SignUp } from "../pages/SIgnUp";
 import { Layout } from "../layout/Layout";
+import { Post } from "../pages/posts/Post";
 
 export const UserRoutes = () => {
   return (
@@ -10,7 +9,7 @@ export const UserRoutes = () => {
       {/* <Route path="/" element={<SignUp />} /> */}
       {/* <Route path="/sign-in" element={<SignIn />} /> */}
       <Route path="/" element={<Layout />}>
-        <Route path="/" element={<div>dfssafdas</div>} />
+        <Route path="/" element={<Post />} />
       </Route>
     </Routes>
   );
