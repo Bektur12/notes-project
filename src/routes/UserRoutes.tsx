@@ -7,9 +7,10 @@ import { Layout } from "../layout/Layout";
 export const UserRoutes = () => {
   return (
     <Routes>
+      {/* <Route path="/" element={<SignUp />} /> */}
+      {/* <Route path="/sign-in" element={<SignIn />} /> */}
       <Route path="/" element={<Layout />}>
-        <Route index path="/" element={<SignUp />} />
-        <Route index path="/sign-in" element={<SignIn />} />
+        <Route path="/" element={<div>dfssafdas</div>} />
       </Route>
     </Routes>
   );
