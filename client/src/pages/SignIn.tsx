@@ -14,7 +14,6 @@ export const SignIn = () => {
         <Button variant="contained">Login</Button>
         <SignUp>
           <p>Зарегистрироваться</p>
-        
         </SignUp>
       </InnerContainer>
     </Container>

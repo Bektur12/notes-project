@@ -12,10 +12,8 @@ export const Card = ({ date, title, description }: ICard) => {
     <Container>
       <DateHeading>{date}</DateHeading>
       <Close style={{ cursor: "pointer" }} />
-      <div>
-        <Title>{title}</Title>
-        <Description>{description}</Description>
-      </div>
+      <Title>{title}</Title>
+      <Description>{description}</Description>
     </Container>
   );
 };
@@ -23,12 +21,13 @@ export const Card = ({ date, title, description }: ICard) => {
 const Container = styled("div")`
   background: #fcfcfc;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  padding: 12px 9px;
+  padding: 1px 9px;
   border-radius: 5px;
-  width: 15%;
+  width: 30%;
   height: 158px;
   display: grid;
-  grid-template-columns: 87% 80%;
+  grid-template-columns: 90% 80%;
+  grid-template-rows: repeat(2, 30% 10%);
   grid-gap: 2px;
   align-items: center;
   font-family: Inter;
@@ -55,4 +54,5 @@ const Description = styled("p")`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  grid-row-start: 3;
 `;

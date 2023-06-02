@@ -1,15 +1,15 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { SignIn } from "../pages/SignIn";
-import { SignUp } from "../pages/SIgnUp";
 import { Layout } from "../layout/Layout";
+import { Post } from "../pages/posts/Post";
 
 export const UserRoutes = () => {
   return (
     <Routes>
+      {/* <Route path="/" element={<SignUp />} /> */}
+      {/* <Route path="/sign-in" element={<SignIn />} /> */}
       <Route path="/" element={<Layout />}>
-        <Route index path="/" element={<SignUp />} />
-        <Route index path="/sign-in" element={<SignIn />} />
+        <Route path="/" element={<Post />} />
       </Route>
     </Routes>
   );
