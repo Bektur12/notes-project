@@ -6,6 +6,7 @@ import { SignUp } from "../pages/SIgnUp";
 import { SignIn } from "../pages/SignIn";
 
 export const UserRoutes = () => {
+
   return (
     <Routes>
       <Route path="/" element={<SignUp />} />
