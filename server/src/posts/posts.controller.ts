@@ -21,6 +21,8 @@ export class PostsController {
 
   @Post()
   async create(@Body() data: Partial<PostEntity>): Promise<PostEntity> {
+    console.log(data);
+
     return await this.postsService.create({
       title: data.title,
       description: data.description,

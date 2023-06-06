@@ -42,6 +42,8 @@ export class PostsService {
     title: string;
     description: string;
   }): Promise<PostEntity> {
+    console.log(data, 'hello');
+
     const post = this.postsRepository.create(data);
     return await this.postsRepository.save(post);
   }

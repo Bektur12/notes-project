@@ -40,9 +40,8 @@ export const Input: FC<InputProps> = ({
 };
 
 const InputStyled = styled(TextField)(() => ({
-  ".css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root ": {
+  ".MuiOutlinedInput-root": {
     borderRadius: "8px",
-    height: "42px",
   },
   ".MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
     border: "1px solid #D9D9D9",
@@ -50,5 +49,8 @@ const InputStyled = styled(TextField)(() => ({
   " & .MuiInputBase-root": {
     background: "#FEFBFF",
     outline: "none",
+  },
+  "& .MuiOutlinedInput-input": {
+    padding: "10px 10px !important",
   },
 }));

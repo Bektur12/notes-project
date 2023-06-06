@@ -1,17 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { Input } from "../../components/UI/Input";
 import styled from "@emotion/styled";
 import { PostList } from "./PostList";
 import { IconButton } from "@mui/material";
 import { ReactComponent as AddIcon } from "../../assets/svg/Plus.svg";
-import EditorComponent from "../../components/UI/EditorComponent";
 
 export const Post = () => {
-  const [value, setValue] = useState("");
   return (
     <Container>
-      <EditorComponent value={value} onChange={setValue} />
-
       <InnerContainer>
         <InputContainer>
           <Input isIcon={true} placeholder="Input something here..." />
