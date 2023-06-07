@@ -1,4 +1,4 @@
-export type SignUp = {
+export type IuserData = {
   username: string;
   password: string;
 };
