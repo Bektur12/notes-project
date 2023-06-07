@@ -14,6 +14,7 @@ export const Input: FC<InputProps> = ({
   type,
   placeholder,
   isIcon,
+  name,
 }) => {
   const viewIconHandler = () => {
     if (isIcon === true) {
@@ -32,6 +33,7 @@ export const Input: FC<InputProps> = ({
       value={value}
       onChange={onChange}
       type={type}
+      name={name}
       fullWidth
       placeholder={placeholder}
       InputProps={viewIconHandler()}

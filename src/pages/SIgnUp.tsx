@@ -1,20 +1,52 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
 import { Input } from "../components/UI/Input";
 import { InputPassword } from "../components/UI/InputPassword";
 import { Button } from "../components/UI/Button";
 import { useNavigate } from "react-router-dom";
+import { registerUser } from "../store/slices/authActions";
+import { useAppDispatch } from "../hooks/useDispatch";
 
 export const SignUp = () => {
   const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const onSendingData = () => {
+    dispatch(registerUser({ ...formData, navigate }));
+  };
 
   return (
     <Container>
       <InnerContainer>
         <Title>Sign Up</Title>
-        <Input type="email" />
-        <InputPassword label="Password" />
-        <Button variant="contained">Sign Up</Button>
+        <Input
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleInputChange}
+        />
+        <InputPassword
+          name="password"
+          label="Password"
+          value={formData.password}
+          onChange={handleInputChange}
+        />
+        <Button variant="contained" onClick={onSendingData}>
+          Sign Up
+        </Button>
         <SignIn>
           <p>У вас есть аккаунт?</p>
           <p onClick={() => navigate("/sign-in")}>Sign In</p>

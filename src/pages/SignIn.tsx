@@ -1,17 +1,51 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
 import { Input } from "../components/UI/Input";
 import { InputPassword } from "../components/UI/InputPassword";
 import { Button } from "../components/UI/Button";
+import { loginUser } from "../store/slices/authActions";
+import { useAppDispatch } from "../hooks/useDispatch";
+import { useNavigate } from "react-router";
 
 export const SignIn = () => {
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const onSendingData = () => {
+    dispatch(loginUser({ ...formData, navigate }));
+  };
   return (
     <Container>
       <InnerContainer>
         <Title>Login</Title>
-        <Input type="email" />
-        <InputPassword label="Password" />
-        <Button variant="contained">Login</Button>
+        <Input
+          value={formData.username}
+          onChange={handleInputChange}
+          name="username"
+        />
+        <InputPassword
+          label="Password"
+          name="password"
+          value={formData.password}
+          onChange={handleInputChange}
+        />
+        <Button variant="contained" onClick={onSendingData}>
+          Login
+        </Button>
         <SignUp>
           <p>Зарегистрироваться</p>
         </SignUp>

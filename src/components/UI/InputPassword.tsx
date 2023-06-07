@@ -12,21 +12,15 @@ import { ReactComponent as Visibility } from "../../assets/svg/views.svg";
 
 type InputProps = TextFieldProps & {};
 
-export const InputPassword: FC<InputProps> = ({
-  value,
-  onChange,
-  placeholder,
-}) => {
+export const InputPassword: FC<InputProps> = ({ ...props }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleShowPasswordClick = () => setShowPassword((prev) => !prev);
 
   return (
     <InputStyled
-      value={value}
-      onChange={onChange}
       type={showPassword ? "password" : "text"}
-      placeholder={placeholder}
+      {...props}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
