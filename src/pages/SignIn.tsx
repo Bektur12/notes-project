@@ -3,11 +3,14 @@ import React, { ChangeEvent, useState } from "react";
 import { Input } from "../components/UI/Input";
 import { InputPassword } from "../components/UI/InputPassword";
 import { Button } from "../components/UI/Button";
-import { loginActions } from "../store/slices/authActions";
+import { loginUser } from "../store/slices/authActions";
 import { useAppDispatch } from "../hooks/useDispatch";
+import { useNavigate } from "react-router";
 
 export const SignIn = () => {
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -21,8 +24,9 @@ export const SignIn = () => {
       [name]: value,
     }));
   };
+
   const onSendingData = () => {
-    dispatch(loginActions(formData));
+    dispatch(loginUser({ ...formData, navigate }));
   };
   return (
     <Container>

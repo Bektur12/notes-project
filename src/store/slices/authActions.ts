@@ -1,28 +1,34 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { authorization } from "../../api/auth";
+import { autorizeUser } from "../../api/auth";
 import { IuserData } from "../../types";
 
-export const registerActions = createAsyncThunk(
-  "name",
-  async (data: IuserData) => {
+export const registerUser = createAsyncThunk(
+  "register/user",
+  async (formData: IuserData) => {
     try {
-      const response = await authorization(data, "signup");
-      console.log(response, "response");
+      const { navigate } = formData;
+      const response = await autorizeUser(formData, "signup");
+      if (response && navigate) {
+        return navigate("/sign-in");
+      }
     } catch (error) {
       console.log(error, "error");
+      throw error;
     }
   }
 );
-export const loginActions = createAsyncThunk(
-  "login",
-  async (data: IuserData) => {
-    console.log(data, "data");
-
+export const loginUser = createAsyncThunk(
+  "login/user",
+  async (formData: IuserData) => {
     try {
-      const response = await authorization(data, "signin");
-      console.log(response, "response");
+      const { navigate } = formData;
+      const response = await autorizeUser(formData, "signin");
+      if (response && navigate) {
+        return navigate("/user/post");
+      }
     } catch (error) {
       console.log(error);
+      throw error;
     }
   }
 );
