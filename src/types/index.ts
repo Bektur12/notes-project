@@ -5,3 +5,9 @@ export type IuserData = {
   password: string;
   navigate?: NavigateFunction;
 };
+
+export type PostData = {
+  title: string;
+  description: string;
+  id: number;
+};
