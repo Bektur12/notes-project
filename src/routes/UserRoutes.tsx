@@ -4,7 +4,7 @@ import { Layout } from "../layout/Layout";
 import { Post } from "../pages/posts/Post";
 import { SignUp } from "../pages/SIgnUp";
 import { SignIn } from "../pages/SignIn";
-import { CreatePost } from "../pages/posts/CreatePost";
+import { CreatePost } from "../pages/posts/Create";
 
 export const UserRoutes = () => {
   return (

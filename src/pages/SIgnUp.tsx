@@ -4,7 +4,7 @@ import { Input } from "../components/UI/Input";
 import { InputPassword } from "../components/UI/InputPassword";
 import { Button } from "../components/UI/Button";
 import { useNavigate } from "react-router-dom";
-import { registerUser } from "../store/slices/authActions";
+import { registerUser } from "../store/actions/auth";
 import { useAppDispatch } from "../hooks/useDispatch";
 
 export const SignUp = () => {

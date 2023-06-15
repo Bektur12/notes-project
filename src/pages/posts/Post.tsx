@@ -14,7 +14,7 @@ export const Post = () => {
       <InnerContainer>
         <InputContainer>
           <Input isIcon={true} placeholder="Input something here..." />
-          <IconButton onClick={() => navigate("/")}>
+          <IconButton onClick={() => navigate("/user/create-post")}>
             <AddIcon />
           </IconButton>
         </InputContainer>

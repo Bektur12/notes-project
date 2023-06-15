@@ -3,7 +3,7 @@ import React, { ChangeEvent, useState } from "react";
 import { Input } from "../components/UI/Input";
 import { InputPassword } from "../components/UI/InputPassword";
 import { Button } from "../components/UI/Button";
-import { loginUser } from "../store/slices/authActions";
+import { loginUser } from "../store/actions/auth";
 import { useAppDispatch } from "../hooks/useDispatch";
 import { useNavigate } from "react-router";
 

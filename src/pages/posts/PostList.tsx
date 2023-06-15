@@ -1,48 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card } from "../../components/UI/Card";
 import styled from "@emotion/styled";
+import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+import { deletePost, getPosts } from "../../store/actions/post";
 
 export const PostList = () => {
+  const dispatch = useAppDispatch();
+
+  const { posts } = useAppSelector((state: any) => state.posts);
+
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [dispatch]);
+
+  const handleDeleteClick = (id: string) => {
+    dispatch(deletePost(id));
+  };
+
   return (
     <List>
-      <Card date="dsasfdas" title="fdasdfa" description="fdsadfas" />
-      <Card date="dsasfdas" title="fdasdfa" description="fdsadfas" />
-      <Card date="dsasfdas" title="fdasdfa" description="fdsadfas" />
-      <Card date="dsasfdas" title="fdasdfa" description="fdsadfas" />
-      <Card date="dsasfdas" title="fdasdfa" description="fdsadfas" />
-      <Card date="dsasfdas" title="fdasdfa" description="fdsadfas" />
-      <Card date="dsasfdas" title="fdasdfa" description="fdsadfas" />
-      <Card
-        date="dsasfdas"
-        title="fdasdfa"
-        description="fdsadfdassssssssssfdsadffffffffffffffffffffffffssssssssssssssssssssssssssssssfdassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssfdassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssfas"
-      />
-      <Card
-        date="dsasfdas"
-        title="fdasdfa"
-        description="fdsadfdassssssssssfdsadffffffffffffffffffffffffssssssssssssssssssssssssssssssfdassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssfdassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssfas"
-      />
-      <Card
-        date="dsasfdas"
-        title="fdasdfa"
-        description="fdsadfdassssssssssfdsadffffffffffffffffffffffffssssssssssssssssssssssssssssssfdassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssfdassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssfas"
-      />
-      <Card
-        date="dsasfdas"
-        title="fdasdfa"
-        description="fdsadfdassssssssssfdsadffffffffffffffffffffffffssssssssssssssssssssssssssssssfdassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssfdassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssfas"
-      />
-      <Card
-        date="dsasfdas"
-        title="fdasdfa"
-        description="fdsadfdassssssssssfdsadffffffffffffffffffffffffssssssssssssssssssssssssssssssfdassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssfdassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssfas"
-      />
-      <Card
-        date="212.32.42"
-        title="beka"
-        description="hello bro have are you?"
-      />
-      <Card date="dsasfdas" title="fdasdfa" description="fdsadfas" />
+      {posts?.map((item: any) => {
+        return (
+          <Card
+            handleDeleteClick={handleDeleteClick}
+            key={item.id}
+            id={item.id}
+            date={item.createdAt}
+            title={item.title}
+            description={item.description}
+          />
+        );
+      })}
     </List>
   );
 };
