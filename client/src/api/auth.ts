@@ -1,7 +1,8 @@
 import axios from "axios";
-import { SignUp } from "../types";
+import { IuserData } from "../types";
+import { BASE_URL } from ".";
 
-export const signUp = async (data: SignUp) => {
-  const response = await axios.post(`auth/signup`, data);
+export const authorization = async (data: IuserData, path: string) => {
+  const response = await axios.post(`${BASE_URL}/auth/${path}`, data);
   return response.data;
 };

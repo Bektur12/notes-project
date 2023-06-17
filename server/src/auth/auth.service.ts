@@ -21,9 +21,10 @@ export class AuthService {
 
   async signIn(username: string, password: string): Promise<User | null> {
     const user = await this.userRepository.findOne({ where: { username } });
+
     if (user && (await bcrypt.compare(password, user.password))) {
       return user;
     }
-    throw new BadRequestException('mpppp');
+    throw new BadRequestException('не найден аккаунт');
   }
 }
