@@ -3,11 +3,13 @@ import { Input } from "../../components/UI/Input";
 import { styled } from "@mui/material";
 import { TextArea } from "../../components/UI/TextArea";
 import { Button } from "../../components/UI/Button";
-import { useAppDispatch } from "../../hooks/useDispatch";
+import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { postUser } from "../../store/actions/post";
 
 export const CreatePost = () => {
   const dispatch = useAppDispatch();
+  const { id } = useAppSelector((state: any) => state.auth);
+  console.log(id, "iiiid");
 
   const [data, setData] = useState({
     title: "",
@@ -25,7 +27,7 @@ export const CreatePost = () => {
   };
 
   const handleClickData = () => {
-    dispatch(postUser(data));
+    dispatch(postUser({ ...data, userId: id }));
   };
   return (
     <Container>
@@ -68,8 +70,4 @@ const Block = styled("div")`
     line-height: 29px;
     color: #ffffff;
   }
-  /* & .MuiButtonBase-root {
-    background-color: #8bc34a;
-    color: white;
-  } */
 `;

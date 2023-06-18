@@ -23,8 +23,10 @@ export const loginUser = createAsyncThunk(
     try {
       const { navigate } = formData;
       const response = await autorizeUser(formData, "signin");
+
       if (response && navigate) {
-        return navigate("/user/post");
+        navigate("/user/post");
+        return response.id;
       }
     } catch (error) {
       console.log(error);
