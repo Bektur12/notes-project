@@ -4,14 +4,17 @@ import styled from "@emotion/styled";
 import { PostList } from "./PostList";
 import { IconButton } from "@mui/material";
 import { ReactComponent as AddIcon } from "../../assets/svg/Plus.svg";
+import { useNavigate } from "react-router-dom";
 
 export const Post = () => {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <InnerContainer>
         <InputContainer>
           <Input isIcon={true} placeholder="Input something here..." />
-          <IconButton>
+          <IconButton onClick={() => navigate("/user/create-post")}>
             <AddIcon />
           </IconButton>
         </InputContainer>

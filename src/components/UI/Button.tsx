@@ -1,12 +1,19 @@
 import React from "react";
-import { Button as MuiButton, ButtonProps } from "@mui/material";
+import { Button as MuiButton, ButtonProps, styled } from "@mui/material";
 
 type IButtonProps = ButtonProps & {};
 
 export const Button = ({ onClick, children, variant }: IButtonProps) => {
   return (
-    <MuiButton onClick={onClick} variant={variant} fullWidth>
+    <ButtonStyled onClick={onClick} variant={variant} fullWidth>
       {children}
-    </MuiButton>
+    </ButtonStyled>
   );
 };
+
+const ButtonStyled = styled(MuiButton)`
+  &.MuiButtonBase-root {
+    background-color: #8bc34a;
+    color: white;
+  }
+`;
