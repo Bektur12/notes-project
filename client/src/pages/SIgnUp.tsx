@@ -4,7 +4,7 @@ import { Input } from "../components/UI/Input";
 import { InputPassword } from "../components/UI/InputPassword";
 import { Button } from "../components/UI/Button";
 import { useNavigate } from "react-router-dom";
-import { registerActions } from "../store/slices/authActions";
+import { registerUser } from "../store/actions/auth";
 import { useAppDispatch } from "../hooks/useDispatch";
 
 export const SignUp = () => {
@@ -25,7 +25,7 @@ export const SignUp = () => {
     }));
   };
   const onSendingData = () => {
-    dispatch(registerActions(formData));
+    dispatch(registerUser({ ...formData, navigate }));
   };
 
   return (

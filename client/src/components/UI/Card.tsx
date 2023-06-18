@@ -6,12 +6,23 @@ type ICard = {
   title: string;
   description: string;
   date: string;
+  handleDeleteClick: (id: string) => void;
+  id: string;
 };
-export const Card = ({ date, title, description }: ICard) => {
+export const Card = ({
+  date,
+  title,
+  description,
+  id,
+  handleDeleteClick,
+}: ICard) => {
   return (
     <Container>
       <DateHeading>{date}</DateHeading>
-      <Close style={{ cursor: "pointer" }} />
+      <Close
+        style={{ cursor: "pointer" }}
+        onClick={() => handleDeleteClick(id)}
+      />
       <Title>{title}</Title>
       <Description>{description}</Description>
     </Container>

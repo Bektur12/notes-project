@@ -5,7 +5,6 @@ import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
 import { User } from './entities/user.entity';
 import { UsersModule } from './users/users.module';
-import { UserRepository } from './users/user.repository';
 
 @Module({
   imports: [

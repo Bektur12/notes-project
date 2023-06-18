@@ -1,15 +1,7 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { PostEntity } from '../entities/post.entity';
-import { UserService } from 'src/users/users.service';
+import { UserService } from '../users/users.service';
 
 export interface PostData {
   title: string;
@@ -33,13 +25,13 @@ export class PostsController {
   async create(@Body() data: PostData): Promise<PostEntity> {
     try {
       const { title, description, userId } = data;
-      console.log(userId, 'idshka');
 
       if (!userId) {
         throw new Error('User ID is required');
       }
 
       const user = await this.userService.findOne(userId);
+      console.log(userId, 'beeeeek');
 
       if (!user) {
         throw new Error(`User with ID ${userId} not found`);
@@ -52,21 +44,8 @@ export class PostsController {
 
       return await this.postsService.create(post);
     } catch (error) {
-      console.log(error, 'random error');
-      throw error;
+      throw new Error(error);
     }
-  }
-  @Get(':id')
-  async getOne(@Param('id') id: string): Promise<PostEntity> {
-    return await this.postsService.getOne(+id);
-  }
-
-  @Patch(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() updateData: Partial<PostEntity>,
-  ): Promise<PostEntity> {
-    return await this.postsService.update(+id, updateData);
   }
 
   @Delete(':id')

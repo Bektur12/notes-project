@@ -4,15 +4,16 @@ import { Layout } from "../layout/Layout";
 import { Post } from "../pages/posts/Post";
 import { SignUp } from "../pages/SIgnUp";
 import { SignIn } from "../pages/SignIn";
+import { CreatePost } from "../pages/posts/Create";
 
 export const UserRoutes = () => {
-
   return (
     <Routes>
       <Route path="/" element={<SignUp />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/" element={<Layout />}>
-        <Route path="/" element={<Post />} />
+        <Route path="/user/post" element={<Post />} />
+        <Route path="/user/create-post" element={<CreatePost />} />
       </Route>
     </Routes>
   );

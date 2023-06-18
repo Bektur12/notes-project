@@ -1,8 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { UserService } from './users.service';
-import { CreateUserDto } from './userCreate.dto';
 import { User } from '../entities/user.entity';
-import { PostEntity } from 'src/entities/post.entity';
+import { PostEntity } from '../entities/post.entity';
 
 @Controller('users')
 export class UserController {
@@ -11,16 +10,16 @@ export class UserController {
   @Get(':id/posts')
   async getUserPosts(@Param('id') id: number): Promise<PostEntity[]> {
     const user = await this.userService.findOneWithPosts(id);
+    if (!user || !user.posts) {
+      throw new Error(
+        `User with ID ${id} not found or does not have any posts`,
+      );
+    }
     return user.posts;
   }
 
-  @Post()
-  createUser(@Body() createUserDto: CreateUserDto) {
-    return this.userService.createUser(createUserDto);
-  }
-
   @Get(':id')
-  async findOne(@Param('id') id: any): Promise<User> {
+  async findOne(@Param('id') id): Promise<User> {
     return await this.userService.findOneWithPosts(id);
   }
 }
