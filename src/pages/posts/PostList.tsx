@@ -8,10 +8,10 @@ import { PostData } from "../../types";
 export const PostList = () => {
   const dispatch = useAppDispatch();
 
-  const { posts = [] } = useAppSelector((state: any) => state);
+  const { posts = [], auth } = useAppSelector((state: any) => state);
 
   useEffect(() => {
-    dispatch(getPosts());
+    dispatch(getPosts(auth.id));
   }, [dispatch]);
 
   const handleDeleteClick = (id: string) => {

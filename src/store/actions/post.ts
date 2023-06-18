@@ -5,17 +5,20 @@ import {
   getPostRequest,
 } from "../../api/posts";
 
-export const postUser = createAsyncThunk("post/user", async (data: any) => {
-  try {
-    const response = await createPostRequest(data);
+export const postUser = createAsyncThunk(
+  "post/user",
+  async (data: any, { dispatch }) => {
+    try {
+      const response = await createPostRequest(data);
+      dispatch(getPosts(data.userId));
+      console.log(response);
+    } catch (error) {}
+  }
+);
 
-    console.log(response);
-  } catch (error) {}
-});
-
-export const getPosts = createAsyncThunk("post/user", async () => {
+export const getPosts = createAsyncThunk("post/user", async (id: string) => {
   try {
-    const response = await getPostRequest();
+    const response = await getPostRequest(id);
 
     return response;
   } catch (error) {}
@@ -26,7 +29,6 @@ export const deletePost = createAsyncThunk(
   async (id: string, { dispatch }) => {
     try {
       const response = await deletePostRequest(id);
-      dispatch(getPosts());
       return response;
     } catch (error) {
       console.log(error);

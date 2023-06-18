@@ -14,6 +14,8 @@ export const postSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getPosts.fulfilled, (state, action) => {
+      console.log(action.payload, "hhhelo");
+
       state.posts = action.payload;
     });
     builder.addCase(getPosts.rejected, (state, action) => {});
