@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import { Card } from "../../components/UI/Card";
 import styled from "@emotion/styled";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
@@ -8,27 +8,20 @@ import { PostData } from "../../types";
 export const PostList = () => {
   const dispatch = useAppDispatch();
 
-  const { posts = [] } = useAppSelector((state: any) => state);
+  const { posts = [], auth } = useAppSelector((state: any) => state);
+
+  const user = JSON.parse(localStorage.getItem("AUTH") as string);
+
+  const isOptionUserId = auth.user.id || user.id;
 
   useEffect(() => {
-    dispatch(getPosts());
+    dispatch(getPosts(isOptionUserId));
   }, [dispatch]);
 
   const handleDeleteClick = (id: string) => {
-    dispatch(deletePost(id));
+    dispatch(deletePost({ deleteId: id, userId: isOptionUserId }));
   };
 
-  async function name() {
-    const fetchData = await fetch("http://localhost:3001/users/32/posts", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const response = await fetchData.json();
-    console.log(response, "responsess");
-  }
-  name();
   return (
     <List>
       {posts?.posts?.length !== 0 ? (

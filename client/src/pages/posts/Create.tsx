@@ -8,8 +8,7 @@ import { postUser } from "../../store/actions/post";
 
 export const CreatePost = () => {
   const dispatch = useAppDispatch();
-  const { id } = useAppSelector((state: any) => state.auth);
-  console.log(id, "iiiid");
+  const { user } = useAppSelector((state: any) => state.auth);
 
   const [data, setData] = useState({
     title: "",
@@ -27,7 +26,7 @@ export const CreatePost = () => {
   };
 
   const handleClickData = () => {
-    dispatch(postUser({ ...data, userId: id }));
+    dispatch(postUser({ ...data, userId: user.id }));
   };
   return (
     <Container>
