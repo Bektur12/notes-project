@@ -9,5 +9,6 @@ export type IuserData = {
 export type PostData = {
   title: string;
   description: string;
-  id: number;
+  id?: number;
+  userId?: string;
 };

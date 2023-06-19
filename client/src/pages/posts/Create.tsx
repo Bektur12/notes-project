@@ -1,13 +1,17 @@
-import React, { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
 import { Input } from "../../components/UI/Input";
 import { styled } from "@mui/material";
 import { TextArea } from "../../components/UI/TextArea";
 import { Button } from "../../components/UI/Button";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { postUser } from "../../store/actions/post";
+import { useNavigate } from "react-router";
 
 export const CreatePost = () => {
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
   const { user } = useAppSelector((state: any) => state.auth);
 
   const [data, setData] = useState({
@@ -26,7 +30,7 @@ export const CreatePost = () => {
   };
 
   const handleClickData = () => {
-    dispatch(postUser({ ...data, userId: user.id }));
+    dispatch(postUser({ ...data, userId: user.id, navigate }));
   };
   return (
     <Container>
