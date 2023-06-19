@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import { Card } from "../../components/UI/Card";
 import styled from "@emotion/styled";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
