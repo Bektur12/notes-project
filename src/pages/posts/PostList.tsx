@@ -10,25 +10,18 @@ export const PostList = () => {
 
   const { posts = [], auth } = useAppSelector((state: any) => state);
 
+  const user = JSON.parse(localStorage.getItem("AUTH") as string);
+
+  const isOptionUserId = auth.user.id || user.id;
+
   useEffect(() => {
-    dispatch(getPosts(auth.id));
+    dispatch(getPosts(isOptionUserId));
   }, [dispatch]);
 
   const handleDeleteClick = (id: string) => {
-    dispatch(deletePost(id));
+    dispatch(deletePost({ deleteId: id, userId: isOptionUserId }));
   };
 
-  async function name() {
-    const fetchData = await fetch("http://localhost:3001/users/32/posts", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const response = await fetchData.json();
-    console.log(response, "responsess");
-  }
-  name();
   return (
     <List>
       {posts?.posts?.length !== 0 ? (
