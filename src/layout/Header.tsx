@@ -3,6 +3,7 @@ import Profile from "../components/profile/Profile";
 import { styled } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { logout } from "../store/slices/authSlice";
+import { Navigations } from "./Navigations";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,8 @@ export const Header = () => {
   return (
     <HeaderStyled>
       <h1>NOTE</h1>
+      <p>YOU CAN WRITE EVERYTHING</p>
+      <Navigations />
       <Profile items={items} />
     </HeaderStyled>
   );
