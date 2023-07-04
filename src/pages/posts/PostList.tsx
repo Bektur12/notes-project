@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Card } from "../../components/UI/Card";
 import styled from "@emotion/styled";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { deletePost, getPosts } from "../../store/actions/post";
 import { PostData } from "../../types";
+import { format, parseISO } from "date-fns";
 
 export const PostList = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +22,11 @@ export const PostList = () => {
   const handleDeleteClick = (id: string) => {
     dispatch(deletePost({ deleteId: id, userId: isOptionUserId }));
   };
+  const getFormatDate = (date: string) => {
+    const parsedDate = parseISO(date);
+    const formattedDate = format(parsedDate, "yyyy.MM.dd");
+    return formattedDate;
+  };
 
   return (
     <List>
@@ -32,7 +38,7 @@ export const PostList = () => {
                 handleDeleteClick={handleDeleteClick}
                 key={item.id}
                 id={item.id}
-                date={item.createdAt}
+                date={getFormatDate(item.createdAt)}
                 title={item.title}
                 description={item.description}
               />
