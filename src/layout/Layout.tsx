@@ -13,7 +13,7 @@ export const Layout = () => {
 };
 
 const LayoutStyled = styled("div")`
-  background-color: #353436;
   width: 100%;
+  background: #343538;
   min-height: 100vh;
 `;
