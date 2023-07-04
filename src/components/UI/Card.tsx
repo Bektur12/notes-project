@@ -5,7 +5,7 @@ import { ReactComponent as Close } from "../../assets/svg/X.svg";
 type ICard = {
   title: string;
   description: string;
-  date: string;
+  date: any;
   handleDeleteClick: (id: string) => void;
   id: string;
 };
@@ -30,8 +30,7 @@ export const Card = ({
 };
 
 const Container = styled("div")`
-  background: #fcfcfc;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: white;
   padding: 1px 9px;
   border-radius: 5px;
   width: 30%;
