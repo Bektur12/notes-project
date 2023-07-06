@@ -5,7 +5,7 @@ type IButtonProps = ButtonProps & {};
 
 export const Button = ({ onClick, children, variant }: IButtonProps) => {
   return (
-    <ButtonStyled onClick={onClick} variant={variant} fullWidth>
+    <ButtonStyled onClick={onClick} variant={variant}>
       {children}
     </ButtonStyled>
   );

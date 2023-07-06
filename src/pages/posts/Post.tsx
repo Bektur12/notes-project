@@ -5,6 +5,7 @@ import { PostList } from "./PostList";
 import { IconButton } from "@mui/material";
 import { ReactComponent as AddIcon } from "../../assets/svg/Plus.svg";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../../components/UI/Button";
 
 export const Post = () => {
   const navigate = useNavigate();
@@ -13,10 +14,9 @@ export const Post = () => {
     <Container>
       <InnerContainer>
         <InputContainer>
-          <Input isIcon={true} placeholder="Input something here..." />
-          <IconButton onClick={() => navigate("/user/create-post")}>
-            <AddIcon />
-          </IconButton>
+          <Button onClick={() => navigate("/user/create-post")}>
+            Создать Пост
+          </Button>
         </InputContainer>
         <PostList />
       </InnerContainer>
