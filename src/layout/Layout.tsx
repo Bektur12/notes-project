@@ -14,6 +14,6 @@ export const Layout = () => {
 
 const LayoutStyled = styled("div")`
   width: 100%;
-  background: #343538;
+  background: white;
   min-height: 100vh;
 `;

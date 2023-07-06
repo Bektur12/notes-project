@@ -27,6 +27,7 @@ export const Card = ({
         <DateHeading>{date}</DateHeading>
         <Title>{title}</Title>
         <Description>{description}</Description>
+        <Text>Читать дальше</Text>
       </Content>
       <Close
         style={{ cursor: "pointer" }}
@@ -43,6 +44,12 @@ const Content = styled("div")`
   gap: 20px;
 `;
 
+const Text = styled("span")`
+  text-decoration: underline;
+  color: #7e5bc2;
+  font-family: Inter;
+`;
+
 const Container = styled("div")`
   background-color: white;
   padding: 1px 9px;
@@ -51,6 +58,7 @@ const Container = styled("div")`
   display: grid;
   grid-template-columns: 30% 68% 40%;
   padding: 10px;
+  border-bottom: 1px solid black;
 `;
 
 const DateHeading = styled("h1")`
@@ -76,4 +84,5 @@ const Description = styled("p")`
   -webkit-box-orient: vertical;
   overflow: hidden;
   grid-row-start: 3;
+  font-family: Inter;
 `;

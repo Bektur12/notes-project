@@ -2,8 +2,6 @@ import React from "react";
 import { Input } from "../../components/UI/Input";
 import styled from "@emotion/styled";
 import { PostList } from "./PostList";
-import { IconButton } from "@mui/material";
-import { ReactComponent as AddIcon } from "../../assets/svg/Plus.svg";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/UI/Button";
 
@@ -12,12 +10,12 @@ export const Post = () => {
 
   return (
     <Container>
+      <InputContainer>
+        <Button onClick={() => navigate("/user/create-post")}>
+          Создать Пост
+        </Button>
+      </InputContainer>
       <InnerContainer>
-        <InputContainer>
-          <Button onClick={() => navigate("/user/create-post")}>
-            Создать Пост
-          </Button>
-        </InputContainer>
         <PostList />
       </InnerContainer>
     </Container>
@@ -27,14 +25,15 @@ export const Post = () => {
 const Container = styled("div")`
   width: 100%;
   display: flex;
-  justify-content: center;
   margin-top: 90px;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
 `;
 const InputContainer = styled("div")`
-  display: flex;
-  width: 100%;
-  gap: 20px;
-  margin-left: 40px;
+  position: fixed;
+  top: 170px;
+  right: 40px;
 `;
 
 const InnerContainer = styled("div")`
