@@ -11,4 +11,21 @@ export type PostData = {
   description: string;
   id?: number;
   userId?: string;
+  createdAt?: string;
 };
+
+interface AuthState {
+  user: {
+    id: string;
+    username: string;
+  };
+}
+
+interface PostsState {
+  posts: PostData[];
+}
+
+export interface RootState {
+  auth: AuthState;
+  posts: PostsState;
+}

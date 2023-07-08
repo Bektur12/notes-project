@@ -1,6 +1,5 @@
 import React from "react";
-import { Input } from "../../components/UI/Input";
-import styled from "@emotion/styled";
+import {styled} from "@mui/material";
 import { PostList } from "./PostList";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/UI/Button";

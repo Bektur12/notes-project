@@ -57,14 +57,14 @@ const Container = styled("div")`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 `;
 
 const Block = styled("div")`
   width: 30%;
   display: grid;
   grid-template-rows: 20% 20% 40% 30%;
-  gap: 10px;
+  gap: 13px;
   h1 {
     font-family: "Inter";
     font-style: normal;

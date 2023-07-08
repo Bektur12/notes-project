@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createPostRequest,
   deletePostRequest,
+  getPostByIdRequest,
   getPostRequest,
 } from "../../api/posts";
 import { PostData } from "../../types";
@@ -18,12 +19,22 @@ export const postUser = createAsyncThunk(
   }
 );
 
-export const getPosts = createAsyncThunk("post/user", async (id: string) => {
+export const getPosts = createAsyncThunk("getposts/user", async (id: string) => {
   try {
     const response = await getPostRequest(id);
     return response;
   } catch (error) {}
 });
+
+export const getPostById = createAsyncThunk(
+  "get/user",
+  async (id: string) => {
+    try {
+      const response = await getPostByIdRequest(id);
+      return response;
+    } catch (error) {}
+  }
+);
 
 export const deletePost = createAsyncThunk(
   "delete/user",
