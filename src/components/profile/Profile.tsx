@@ -2,6 +2,7 @@ import React from "react";
 import { Avatar, MenuItem, Menu } from "@mui/material";
 import { styled } from "@mui/system";
 import { useAppSelector } from "../../hooks/useDispatch";
+import profile from "../../assets/svg/profile.svg";
 
 type ItemsProfile = {
   id: string;
@@ -38,7 +39,7 @@ const Profile = ({ items }: ProfileProps) => {
         <StyledAvatar
           onClick={handleOpenUserMenu}
           alt="Remy Sharp"
-          src="/static/images/avatar/2.jpg"
+          src={profile}
         />
         <UserName>{user.username}</UserName>
       </AvatarContainer>

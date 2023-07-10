@@ -20,3 +20,13 @@ export const getPostRequest = async (id: string) => {
   const response = await axios.get(`${BASE_URL}/users/${id}/posts`);
   return response.data;
 };
+export const getPostByIdRequest = async (id: string) => {
+  const response = await axios.get(`${BASE_URL}/posts/${id}`);
+  return response.data;
+};
+export const filteredPostsRequest = async (title: string, userId: string) => {
+  const response = await axios.get(
+    `${BASE_URL}/posts?title=${encodeURIComponent(title)}&userId=${userId}`
+  );
+  return response.data;
+};
