@@ -1,8 +1,9 @@
 import React from "react";
-import {styled} from "@mui/material";
+import { styled } from "@mui/material";
 import { PostList } from "./PostList";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/UI/Button";
+import { FilteredPosts } from "./FilteredPosts";
 
 export const Post = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ export const Post = () => {
         </Button>
       </InputContainer>
       <InnerContainer>
+        <FilteredPosts />
         <PostList />
       </InnerContainer>
     </Container>
@@ -37,9 +39,6 @@ const InputContainer = styled("div")`
 
 const InnerContainer = styled("div")`
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  width: 50%;
-  gap: 50px;
+  width: 100%;
+  gap: 100px;
 `;

@@ -6,6 +6,7 @@ import { Button } from "../../components/UI/Button";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { postUser } from "../../store/actions/post";
 import { useNavigate } from "react-router";
+import { capitalizedString } from "../../utils/constants";
 
 export const CreatePost = () => {
   const dispatch = useAppDispatch();
@@ -30,7 +31,14 @@ export const CreatePost = () => {
   };
 
   const handleClickData = () => {
-    dispatch(postUser({ ...data, userId: user.id, navigate }));
+    dispatch(
+      postUser({
+        ...data,
+        userId: user.id,
+        navigate,
+        title: capitalizedString(data.title),
+      })
+    );
   };
   return (
     <Container>

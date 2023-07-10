@@ -5,11 +5,13 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { deletePost, getPosts } from "../../store/actions/post";
 import { PostData, RootState } from "../../types";
 import { getFormatDate } from "../../utils";
+import { capitalizedString } from "../../utils/constants";
 
 export const PostList = () => {
   const dispatch = useAppDispatch();
 
   const { posts = [] } = useAppSelector((state: RootState) => state.posts);
+  console.log(posts, "hello");
 
   const user = JSON.parse(localStorage.getItem("AUTH") as string);
 
@@ -33,7 +35,7 @@ export const PostList = () => {
               key={item.id}
               id={item.id?.toString() as string}
               date={getFormatDate(item.createdAt as string)}
-              title={item.title}
+              title={capitalizedString(item.title)}
               description={item.description}
             />
           );
@@ -46,7 +48,7 @@ export const PostList = () => {
 };
 
 const List = styled("div")`
-  width: 100%;
+  width: 60%;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;

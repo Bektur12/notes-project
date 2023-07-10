@@ -12,7 +12,7 @@ export const Button = ({ onClick, children, variant }: IButtonProps) => {
 };
 
 const ButtonStyled = styled(MuiButton)`
-  &.MuiButtonBase-root {
+  &.MuiButton-root {
     background-color: #8bc34a;
     color: white;
   }
