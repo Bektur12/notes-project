@@ -1,49 +1,52 @@
 import styled from "@emotion/styled";
-import React, { ChangeEvent, useState } from "react";
 import { Input } from "../components/UI/Input";
 import { InputPassword } from "../components/UI/InputPassword";
 import { Button } from "../components/UI/Button";
 import { loginUser } from "../store/actions/auth";
 import { useAppDispatch } from "../hooks/useDispatch";
 import { useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
 
 export const SignIn = () => {
   const dispatch = useAppDispatch();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const onSendingData = (data: any) => {
+    dispatch(loginUser({ ...data, navigate }));
   };
 
-  const onSendingData = () => {
-    dispatch(loginUser({ ...formData, navigate }));
-  };
+  console.log(getMessage(errors, errors.password), "hello world ");
+
   return (
     <Container>
       <InnerContainer>
         <Title>Login</Title>
-        <Input
-          value={formData.username}
-          onChange={handleInputChange}
-          name="username"
-        />
-        <InputPassword
-          label="Password"
-          name="password"
-          value={formData.password}
-          onChange={handleInputChange}
-        />
-        <Button variant="contained" onClick={onSendingData}>
+        <InputContainer>
+          <Input
+            {...register("username", { required: "Username is required" })}
+            placeholder="Username"
+            name="username"
+            error={getMessage(errors, "username") ? true : false}
+            helperText={getMessage(errors, "username")}
+          />
+
+          <InputPassword
+            {...register("password", { required: "Password is required" })}
+            placeholder="Password"
+            name="password"
+            error={(errors.password?.message as string) ? true : false}
+            helperText={errors.password?.message as string}
+          />
+        </InputContainer>
+
+        <Button variant="contained" onClick={handleSubmit(onSendingData)}>
           Login
         </Button>
         <SignUp>
@@ -102,4 +105,10 @@ const SignUp = styled("div")`
       text-decoration: underline;
     }
   }
+`;
+
+const InputContainer = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
 `;

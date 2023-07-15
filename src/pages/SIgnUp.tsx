@@ -1,55 +1,42 @@
 import styled from "@emotion/styled";
-import React, { ChangeEvent, useState } from "react";
 import { Input } from "../components/UI/Input";
 import { InputPassword } from "../components/UI/InputPassword";
 import { Button } from "../components/UI/Button";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../store/actions/auth";
 import { useAppDispatch } from "../hooks/useDispatch";
+import { useForm } from "react-hook-form";
 
 export const SignUp = () => {
-  const navigate = useNavigate();
+  const navigateToSignIn = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const dispatch = useAppDispatch();
 
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-  const onSendingData = () => {
-    dispatch(registerUser({ ...formData, navigate }));
+  const handleSendingData = (data: any) => {
+    dispatch(registerUser({ ...data, navigate: navigateToSignIn }));
   };
 
   return (
     <Container>
       <InnerContainer>
         <Title>Sign Up</Title>
-        <Input
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleInputChange}
-        />
-        <InputPassword
-          name="password"
-          label="Password"
-          value={formData.password}
-          onChange={handleInputChange}
-        />
-        <Button variant="contained" onClick={onSendingData}>
+        <Input {...register("username")} placeholder="Username" />
+
+        <InputPassword {...register("password")} placeholder="Password" />
+
+        <Button variant="contained" onClick={handleSubmit(handleSendingData)}>
           Sign Up
         </Button>
         <SignIn>
           <p>У вас есть аккаунт?</p>
-          <p onClick={() => navigate("/sign-in")}>Sign In</p>
+          <NavigateToSignIn onClick={() => navigateToSignIn("/sign-in")}>
+            Sign In
+          </NavigateToSignIn>
         </SignIn>
       </InnerContainer>
     </Container>
@@ -89,6 +76,7 @@ const SignIn = styled("div")`
   color: #ffffff;
   font-size: 14px;
   margin-top: 16px;
+  font-family: Inter;
 
   & > p {
     margin: 0;
@@ -104,4 +92,8 @@ const SignIn = styled("div")`
       text-decoration: underline;
     }
   }
+`;
+
+const NavigateToSignIn = styled("p")`
+  cursor: pointer;
 `;
