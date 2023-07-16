@@ -5,7 +5,9 @@ import { Button } from "../components/UI/Button";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../store/actions/auth";
 import { useAppDispatch } from "../hooks/useDispatch";
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { getMessage } from "../utils/constants";
+import { IuserData } from "../types";
 
 export const SignUp = () => {
   const navigateToSignIn = useNavigate();
@@ -17,17 +19,35 @@ export const SignUp = () => {
 
   const dispatch = useAppDispatch();
 
-  const handleSendingData = (data: any) => {
-    dispatch(registerUser({ ...data, navigate: navigateToSignIn }));
+  const handleSendingData: SubmitHandler<FieldValues> = (data) => {
+    dispatch(
+      registerUser({ ...data, navigate: navigateToSignIn } as IuserData)
+    );
   };
 
   return (
     <Container>
       <InnerContainer>
         <Title>Sign Up</Title>
-        <Input {...register("username")} placeholder="Username" />
+        <Input
+          {...register("username", { required: "Username is required" })}
+          placeholder="Username"
+          error={getMessage(errors, "username") ? true : false}
+          helperText={getMessage(errors, "username")}
+        />
 
-        <InputPassword {...register("password")} placeholder="Password" />
+        <InputPassword
+          {...register("password", {
+            required: "Password is required",
+            pattern: {
+              value: /^\d{1,8}$/,
+              message: "Password must be a number with a maximum of 8 digits",
+            },
+          })}
+          placeholder="Password"
+          error={getMessage(errors, "password") ? true : false}
+          helperText={getMessage(errors, "password")}
+        />
 
         <Button variant="contained" onClick={handleSubmit(handleSendingData)}>
           Sign Up

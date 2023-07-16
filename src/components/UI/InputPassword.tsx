@@ -15,7 +15,7 @@ type InputProps = TextFieldProps & {
 };
 
 export const InputPassword = forwardRef<HTMLInputElement, InputProps>(
-  ({ placeholder, ...props }: InputProps, ref) => {
+  ({ ...rest }: InputProps, ref) => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const handleShowPasswordClick = () => setShowPassword((prev) => !prev);
@@ -23,8 +23,7 @@ export const InputPassword = forwardRef<HTMLInputElement, InputProps>(
     return (
       <InputStyled
         type={showPassword ? "password" : "text"}
-        {...props}
-        placeholder={placeholder}
+        {...rest}
         inputRef={ref}
         InputProps={{
           endAdornment: (
@@ -54,5 +53,11 @@ const InputStyled = styled(TextField)(() => ({
     padding: "10px 10px !important",
   },
 
-  "& .MuiFormHelperText-root": {},
+  "& .MuiFormHelperText-root": {
+    background: "red",
+    lineHeight: "0",
+    marginTop: "10px",
+    position: "absolute",
+    top: "43px",
+  },
 }));

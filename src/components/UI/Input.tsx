@@ -8,21 +8,7 @@ type InputProps = TextFieldProps & {
 };
 
 export const Input = forwardRef(
-  (
-    {
-      value,
-      onChange,
-      type,
-      placeholder,
-      isIcon,
-      name,
-      error,
-      helperText,
-    }: InputProps,
-    ref: Ref<HTMLInputElement>
-  ) => {
-    console.log(error, "error");
-
+  ({ isIcon, ...rest }: InputProps, ref: Ref<HTMLInputElement>) => {
     const viewIconHandler = () => {
       if (isIcon === true) {
         return {
@@ -35,19 +21,7 @@ export const Input = forwardRef(
       }
     };
 
-    return (
-      <InputStyled
-        ref={ref}
-        value={value}
-        onChange={onChange}
-        type={type}
-        name={name}
-        fullWidth
-        placeholder={placeholder}
-        helperText={helperText}
-        InputProps={viewIconHandler()}
-      />
-    );
+    return <InputStyled ref={ref} {...rest} InputProps={viewIconHandler()} />;
   }
 );
 
@@ -66,6 +40,10 @@ const InputStyled = styled(TextField)(() => ({
     padding: "10px 10px !important",
   },
   "& .MuiFormHelperText-root": {
-    marginRight: "30px !important",
+    background: "red",
+    lineHeight: "0",
+    marginTop: "10px",
+    position: "absolute",
+    top: "43px",
   },
 }));

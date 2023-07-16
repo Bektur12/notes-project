@@ -5,10 +5,14 @@ import { Button } from "../components/UI/Button";
 import { loginUser } from "../store/actions/auth";
 import { useAppDispatch } from "../hooks/useDispatch";
 import { useNavigate } from "react-router";
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { getMessage } from "../utils/constants";
+import { IuserData } from "../types";
 
 export const SignIn = () => {
   const dispatch = useAppDispatch();
+
+  const navigateToSignUp = useNavigate();
 
   const {
     register,
@@ -18,38 +22,39 @@ export const SignIn = () => {
 
   const navigate = useNavigate();
 
-  const onSendingData = (data: any) => {
-    dispatch(loginUser({ ...data, navigate }));
+  const onSendingData: SubmitHandler<FieldValues> = (data) => {
+    dispatch(loginUser({ ...data, navigate } as IuserData));
   };
-
-  console.log(getMessage(errors, errors.password), "hello world ");
 
   return (
     <Container>
       <InnerContainer>
         <Title>Login</Title>
-        <InputContainer>
-          <Input
-            {...register("username", { required: "Username is required" })}
-            placeholder="Username"
-            name="username"
-            error={getMessage(errors, "username") ? true : false}
-            helperText={getMessage(errors, "username")}
-          />
+        <Input
+          {...register("username", {
+            required: "Username is required",
+          })}
+          placeholder="Username"
+          name="username"
+          error={getMessage(errors, "username") ? true : false}
+          helperText={getMessage(errors, "username")}
+        />
 
-          <InputPassword
-            {...register("password", { required: "Password is required" })}
-            placeholder="Password"
-            name="password"
-            error={(errors.password?.message as string) ? true : false}
-            helperText={errors.password?.message as string}
-          />
-        </InputContainer>
+        <InputPassword
+          {...register("password", {
+            required: "Password is required",
+            max: 4,
+          })}
+          placeholder="Password"
+          name="password"
+          error={getMessage(errors, "password") ? true : false}
+          helperText={getMessage(errors, "password")}
+        />
 
         <Button variant="contained" onClick={handleSubmit(onSendingData)}>
           Login
         </Button>
-        <SignUp>
+        <SignUp onClick={() => navigateToSignUp("/")}>
           <p>Зарегистрироваться</p>
         </SignUp>
       </InnerContainer>
@@ -90,6 +95,8 @@ const SignUp = styled("div")`
   color: #ffffff;
   font-size: 14px;
   margin-top: 16px;
+  font-family: Inter;
+  cursor: pointer;
 
   & > p {
     margin: 0;
@@ -111,4 +118,5 @@ const InputContainer = styled("div")`
   display: flex;
   flex-direction: column;
   gap: 11px;
+  height: 100px;
 `;
