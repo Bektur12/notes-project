@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { registerUser } from "../store/actions/auth";
 import { useAppDispatch } from "../hooks/useDispatch";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { getMessage } from "../utils/constants";
+import { getMessage, patternValidation } from "../utils/constants";
 import { IuserData } from "../types";
 
 export const SignUp = () => {
@@ -39,10 +39,7 @@ export const SignUp = () => {
         <InputPassword
           {...register("password", {
             required: "Password is required",
-            pattern: {
-              value: /^\d{1,8}$/,
-              message: "Password must be a number with a maximum of 8 digits",
-            },
+            pattern: patternValidation.pattern,
           })}
           placeholder="Password"
           error={getMessage(errors, "password") ? true : false}

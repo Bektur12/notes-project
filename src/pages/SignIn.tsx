@@ -6,7 +6,7 @@ import { loginUser } from "../store/actions/auth";
 import { useAppDispatch } from "../hooks/useDispatch";
 import { useNavigate } from "react-router";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { getMessage } from "../utils/constants";
+import { getMessage, patternValidation } from "../utils/constants";
 import { IuserData } from "../types";
 
 export const SignIn = () => {
@@ -43,7 +43,7 @@ export const SignIn = () => {
         <InputPassword
           {...register("password", {
             required: "Password is required",
-            max: 4,
+            pattern: patternValidation.pattern,
           })}
           placeholder="Password"
           name="password"
