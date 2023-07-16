@@ -1,31 +1,28 @@
 import styled from "@emotion/styled";
-import React, { ChangeEvent, useState } from "react";
 import { Input } from "../components/UI/Input";
 import { InputPassword } from "../components/UI/InputPassword";
 import { Button } from "../components/UI/Button";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../store/actions/auth";
 import { useAppDispatch } from "../hooks/useDispatch";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { getMessage, patternValidation } from "../utils/constants";
+import { IuserData } from "../types";
 
 export const SignUp = () => {
-  const navigate = useNavigate();
+  const navigateToSignIn = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const dispatch = useAppDispatch();
 
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-  const onSendingData = () => {
-    dispatch(registerUser({ ...formData, navigate }));
+  const handleSendingData: SubmitHandler<FieldValues> = (data) => {
+    dispatch(
+      registerUser({ ...data, navigate: navigateToSignIn } as IuserData)
+    );
   };
 
   return (
@@ -33,23 +30,30 @@ export const SignUp = () => {
       <InnerContainer>
         <Title>Sign Up</Title>
         <Input
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleInputChange}
+          {...register("username", { required: "Username is required" })}
+          placeholder="Username"
+          error={getMessage(errors, "username") ? true : false}
+          helperText={getMessage(errors, "username")}
         />
+
         <InputPassword
-          name="password"
-          label="Password"
-          value={formData.password}
-          onChange={handleInputChange}
+          {...register("password", {
+            required: "Password is required",
+            pattern: patternValidation.pattern,
+          })}
+          placeholder="Password"
+          error={getMessage(errors, "password") ? true : false}
+          helperText={getMessage(errors, "password")}
         />
-        <Button variant="contained" onClick={onSendingData}>
+
+        <Button variant="contained" onClick={handleSubmit(handleSendingData)}>
           Sign Up
         </Button>
         <SignIn>
           <p>У вас есть аккаунт?</p>
-          <p onClick={() => navigate("/sign-in")}>Sign In</p>
+          <NavigateToSignIn onClick={() => navigateToSignIn("/sign-in")}>
+            Sign In
+          </NavigateToSignIn>
         </SignIn>
       </InnerContainer>
     </Container>
@@ -89,6 +93,7 @@ const SignIn = styled("div")`
   color: #ffffff;
   font-size: 14px;
   margin-top: 16px;
+  font-family: Inter;
 
   & > p {
     margin: 0;
@@ -104,4 +109,8 @@ const SignIn = styled("div")`
       text-decoration: underline;
     }
   }
+`;
+
+const NavigateToSignIn = styled("p")`
+  cursor: pointer;
 `;

@@ -43,7 +43,6 @@ export const loginUser = createAsyncThunk(
         return navigate("/user/post");
       }
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
