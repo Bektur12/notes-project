@@ -8,6 +8,8 @@ import {
 } from "../../api/posts";
 import { PostData } from "../../types";
 import { NavigateFunction } from "react-router";
+import axios from "axios";
+import { BASE_URL } from "../../api";
 
 export const postUser = createAsyncThunk(
   "post/user",
@@ -17,7 +19,7 @@ export const postUser = createAsyncThunk(
   ) => {
     try {
       await createPostRequest(data);
-      dispatch(getPosts(data.userId as string));
+      dispatch(getPosts(data.userId as any));
       data.notify({
         type: "success",
         message: "Пост успешно добавлен",
@@ -29,12 +31,16 @@ export const postUser = createAsyncThunk(
 );
 
 export const getPosts = createAsyncThunk(
-  "getposts/user",
-  async (id: string) => {
+  "posts/getPosts",
+  async ({ id, page }: { id: any; page: any }) => {
     try {
-      const response = await getPostRequest(id);
-      return response;
-    } catch (error) {}
+      const response = await axios.get(
+        `${BASE_URL}/users/${id}/posts?page=${page}`
+      );
+      return response.data;
+    } catch (error) {
+      throw new Error("Failed to fetch posts");
+    }
   }
 );
 
@@ -53,7 +59,7 @@ export const deletePost = createAsyncThunk(
   ) => {
     try {
       const response = await deletePostRequest(data.deleteId);
-      dispatch(getPosts(data.userId));
+      dispatch(getPosts(data.userId as any));
       data.notify({
         type: "success",
         message: "Пост успешно удален",
