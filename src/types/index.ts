@@ -29,3 +29,12 @@ export interface RootState {
   auth: AuthState;
   posts: PostsState;
 }
+
+type SnackbarProps = {
+  type: string;
+  title: string;
+  message: string;
+  options: string;
+};
+
+export type NotifyFunction = (arg: SnackbarProps) => void;

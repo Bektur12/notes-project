@@ -11,8 +11,10 @@ export const FilteredPosts = () => {
 
   const [selectedOption, setSelectedOption] = useState("");
 
-  const onHandleChangeValue = (_: boolean, title: string) => {
-    setSelectedOption(title);
+  const onHandleChangeValue = (checked: boolean, title: string) => {
+    if (checked) {
+      setSelectedOption(title);
+    }
   };
 
   const user = JSON.parse(localStorage.getItem("AUTH") as string);
@@ -37,7 +39,7 @@ export const FilteredPosts = () => {
             onChange={(checked) =>
               onHandleChangeValue(checked as boolean, item)
             }
-            checked={true}
+            checked={selectedOption === item}
             title={item}
           />
           <li>{item}</li>
