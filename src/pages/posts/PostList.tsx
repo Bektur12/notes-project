@@ -6,12 +6,15 @@ import { deletePost, getPosts } from "../../store/actions/post";
 import { PostData, RootState } from "../../types";
 import { getFormatDate } from "../../utils";
 import { capitalizedString } from "../../utils/constants";
+import { Snackbar } from "../../components/UI/SnackBar";
+import { useSnackbar } from "../../hooks/useSnackbar";
 
 export const PostList = () => {
   const dispatch = useAppDispatch();
 
+  const { notify } = useSnackbar();
+
   const { posts = [] } = useAppSelector((state: RootState) => state.posts);
-  console.log(posts, "hello");
 
   const user = JSON.parse(localStorage.getItem("AUTH") as string);
 
@@ -22,11 +25,12 @@ export const PostList = () => {
   }, []);
 
   const handleDeleteClick = (id: string) => {
-    dispatch(deletePost({ deleteId: id, userId: isOptionUserId }));
+    dispatch(deletePost({ deleteId: id, userId: isOptionUserId, notify }));
   };
 
   return (
     <List>
+      <Snackbar />
       {posts?.length !== 0 ? (
         posts?.map((item: PostData) => {
           return (

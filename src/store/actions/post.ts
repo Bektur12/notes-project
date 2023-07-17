@@ -11,10 +11,18 @@ import { NavigateFunction } from "react-router";
 
 export const postUser = createAsyncThunk(
   "post/user",
-  async (data: PostData & { navigate: NavigateFunction }, { dispatch }) => {
+  async (
+    data: PostData & { navigate: NavigateFunction; notify: any },
+    { dispatch }
+  ) => {
     try {
       await createPostRequest(data);
       dispatch(getPosts(data.userId as string));
+      data.notify({
+        type: "success",
+        message: "Пост успешно добавлен",
+        title: "Successfully",
+      });
       return data.navigate("/user/post");
     } catch (error) {}
   }
@@ -39,10 +47,18 @@ export const getPostById = createAsyncThunk("get/user", async (id: string) => {
 
 export const deletePost = createAsyncThunk(
   "filtered/user",
-  async (data: { deleteId: string; userId: string }, { dispatch }) => {
+  async (
+    data: { deleteId: string; userId: string; notify: any },
+    { dispatch }
+  ) => {
     try {
       const response = await deletePostRequest(data.deleteId);
       dispatch(getPosts(data.userId));
+      data.notify({
+        type: "success",
+        message: "Пост успешно удален",
+        title: "Successfully",
+      });
       return response;
     } catch (error) {
       console.log(error);

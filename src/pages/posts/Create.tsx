@@ -7,9 +7,12 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { postUser } from "../../store/actions/post";
 import { useNavigate } from "react-router";
 import { capitalizedString } from "../../utils/constants";
+import { useSnackbar } from "../../hooks/useSnackbar";
 
 export const CreatePost = () => {
   const dispatch = useAppDispatch();
+
+  const { notify } = useSnackbar();
 
   const navigate = useNavigate();
 
@@ -31,20 +34,23 @@ export const CreatePost = () => {
   };
 
   const handleClickData = () => {
+    if (!data.title.trim() && !data.description.trim()) return;
+
     dispatch(
       postUser({
         ...data,
         userId: user.id,
         navigate,
         title: capitalizedString(data.title),
+        notify,
       })
     );
   };
+
   return (
     <Container>
       <Block>
         <h1>Create Note</h1>
-
         <Input
           value={data.title}
           onChange={handleTitleChange}
