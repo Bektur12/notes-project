@@ -12,6 +12,10 @@ export class AuthService {
   ) {}
 
   async signUp(username: string, password: string): Promise<User> {
+    const oldUser = await this.userRepository.findOne({ where: { username } });
+    if (oldUser) {
+      throw new BadRequestException('этот user уже зарегистрирован');
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User();
     user.username = username;
@@ -19,12 +23,13 @@ export class AuthService {
     return this.userRepository.save(user);
   }
 
-  async signIn(username: string, password: string): Promise<User | null> {
+  async signIn(username: string, password: string): Promise<User> {
     const user = await this.userRepository.findOne({ where: { username } });
 
-    if (user && (await bcrypt.compare(password, user.password))) {
-      return user;
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      throw new BadRequestException('Неправильный логин или пароль');
     }
-    throw new BadRequestException('не найден аккаунт');
+
+    return user;
   }
 }

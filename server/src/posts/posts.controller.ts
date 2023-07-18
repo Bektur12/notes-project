@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { PostEntity } from '../entities/post.entity';
 import { UserService } from '../users/users.service';
@@ -17,8 +25,13 @@ export class PostsController {
   ) {}
 
   @Get()
-  async getAll(): Promise<PostEntity[]> {
-    return await this.postsService.getAll();
+  async getAll(
+    @Query('title') title: string,
+    @Query('userId') userId: number,
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ): Promise<{ posts: PostEntity[]; total: number }> {
+    return await this.postsService.getAll(title, userId, page, limit);
   }
 
   @Post()
@@ -31,7 +44,6 @@ export class PostsController {
       }
 
       const user = await this.userService.findOne(userId);
-      console.log(userId, 'beeeeek');
 
       if (!user) {
         throw new Error(`User with ID ${userId} not found`);
@@ -51,5 +63,10 @@ export class PostsController {
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<void> {
     return await this.postsService.remove(+id);
+  }
+
+  @Get(':id')
+  async getById(@Param('id') id: string): Promise<PostEntity> {
+    return await this.postsService.getById(+id);
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Param } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PostEntity } from '../entities/post.entity';
@@ -9,9 +9,34 @@ export class PostsService {
     @InjectRepository(PostEntity)
     private readonly postsRepository: Repository<PostEntity>,
   ) {}
+  async getAll(
+    title: string,
+    userId: number,
+    page: number,
+    limit: number,
+  ): Promise<{ posts: PostEntity[]; total: number }> {
+    const where = {};
 
-  async getAll(): Promise<PostEntity[]> {
-    return await this.postsRepository.find();
+    if (title) {
+      where['title'] = title;
+    }
+
+    if (userId) {
+      where['userId'] = userId;
+    }
+
+    const [posts, total] = await this.postsRepository.findAndCount({
+      where,
+      skip: (page - 1) * limit,
+      take: limit,
+      relations: ['user'],
+    });
+
+    return { posts, total };
+  }
+
+  async getById(@Param() id: number): Promise<PostEntity> {
+    return await this.postsRepository.findOne({ where: { id } });
   }
 
   async remove(id: number): Promise<void> {
