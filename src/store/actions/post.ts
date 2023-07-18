@@ -8,8 +8,12 @@ import {
 } from "../../api/posts";
 import { PostData } from "../../types";
 import { NavigateFunction } from "react-router";
-import axios from "axios";
-import { BASE_URL } from "../../api";
+
+interface GetPostsOptions {
+  userId: string;
+  page: number;
+  limit: number;
+}
 
 export const postUser = createAsyncThunk(
   "post/user",
@@ -31,19 +35,16 @@ export const postUser = createAsyncThunk(
 );
 
 export const getPosts = createAsyncThunk(
-  "posts/getPosts",
-  async ({ id, page }: { id: any; page: any }) => {
+  "getposts/user",
+  async ({ userId, page, limit }: GetPostsOptions) => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/users/${id}/posts?page=${page}`
-      );
-      return response.data;
+      const response = await getPostRequest(userId, page, limit);
+      return response;
     } catch (error) {
       throw new Error("Failed to fetch posts");
     }
   }
 );
-
 export const getPostById = createAsyncThunk("get/user", async (id: string) => {
   try {
     const response = await getPostByIdRequest(id);
