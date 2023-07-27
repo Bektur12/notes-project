@@ -60,13 +60,13 @@ const Text = styled("span")`
 `;
 
 const Container = styled("div")`
-  background-color: #faf5f5;
+  background-color: #fff;
+  border: 1px solid #eaeaea;
   border-radius: 5px;
   width: 100%;
   display: grid;
   grid-template-columns: 30% 68% 20%;
   padding: 10px;
-  border-bottom: 1px solid black;
   height: 25vh;
 `;
 
@@ -78,8 +78,6 @@ const DateHeading = styled("h1")`
 const Title = styled("h1")`
   font-size: 14px;
   color: green;
-  /* text-decoration: underline;
-  text-transform: uppercase; */
 `;
 const Description = styled("p")`
   word-wrap: break-word;

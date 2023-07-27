@@ -33,14 +33,16 @@ export const FilteredPosts = () => {
 
   return (
     <Container>
-      {OPTIONS.map((item) => (
-        <FilteredContent key={Math.random()}>
+      {OPTIONS.map((item, index) => (
+        <FilteredContent key={index}>
+          <label htmlFor={`checkbox-${index}`}></label>
           <CheckBox
             onChange={(checked) =>
               onHandleChangeValue(checked as boolean, item)
             }
             checked={selectedOption === item}
             title={item}
+            id={`checkbox-${index}`}
           />
           <li>{item}</li>
         </FilteredContent>
@@ -50,11 +52,12 @@ export const FilteredPosts = () => {
   );
 };
 
-const FilteredContent = styled("div")`
+const FilteredContent = styled("ul")`
   list-style: none;
   display: flex;
   align-items: center;
   font-family: Inter;
+  list-style: none;
 `;
 const Container = styled("div")``;
 

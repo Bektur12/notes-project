@@ -17,9 +17,7 @@ export const postSlice = createSlice({
       state.posts = action.payload as any;
     });
     builder.addCase(filteredPosts.fulfilled, (state, action) => {
-      console.log(action.payload, "hello world");
-
-      state.posts = action.payload;
+      state.posts = action.payload.posts;
     });
   },
 });

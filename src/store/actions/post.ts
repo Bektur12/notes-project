@@ -53,14 +53,24 @@ export const getPostById = createAsyncThunk("get/user", async (id: string) => {
 });
 
 export const deletePost = createAsyncThunk(
-  "filtered/user",
+  "delete/user",
   async (
-    data: { deleteId: string; userId: string; notify: any },
+    data: {
+      deleteId: string;
+      userId: string;
+      notify: any;
+      page: number;
+      limit: number;
+    },
+
     { dispatch }
   ) => {
     try {
-      const response = await deletePostRequest(data.deleteId);
-      dispatch(getPosts(data.userId as any));
+      const { deleteId, limit, page, userId } = data;
+
+      const response = await deletePostRequest(deleteId);
+
+      dispatch(getPosts({ limit, page, userId }));
       data.notify({
         type: "success",
         message: "Пост успешно удален",
@@ -73,7 +83,7 @@ export const deletePost = createAsyncThunk(
   }
 );
 export const filteredPosts = createAsyncThunk(
-  "delete/user",
+  "filtered/user",
   async (data: { title: string; userId: string }) => {
     console.log(data.userId);
 

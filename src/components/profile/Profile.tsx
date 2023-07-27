@@ -47,6 +47,7 @@ const Profile = ({ items }: ProfileProps) => {
         anchorEl={anchorElUser}
         anchorOrigin={styles}
         keepMounted
+        disableScrollLock
         transformOrigin={styles}
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
