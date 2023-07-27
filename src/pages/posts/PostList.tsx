@@ -1,49 +1,51 @@
-import { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Card } from "../../components/UI/Card";
 import styled from "@emotion/styled";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { deletePost, getPosts } from "../../store/actions/post";
-import { PostData, RootState } from "../../types";
-import { getFormatDate } from "../../utils";
-import { capitalizedString } from "../../utils/constants";
-import { Snackbar } from "../../components/UI/SnackBar";
-import { useSnackbar } from "../../hooks/useSnackbar";
+import { PostData } from "../../types";
 
 export const PostList = () => {
   const dispatch = useAppDispatch();
 
-  const { notify } = useSnackbar();
-
-  const { posts = [] } = useAppSelector((state: RootState) => state.posts);
-
-  const user = JSON.parse(localStorage.getItem("AUTH") as string);
-
-  const isOptionUserId = user.id;
+  const { posts = [] } = useAppSelector((state: any) => state);
 
   useEffect(() => {
-    dispatch(getPosts(isOptionUserId));
-  }, []);
+    dispatch(getPosts());
+  }, [dispatch]);
 
   const handleDeleteClick = (id: string) => {
-    dispatch(deletePost({ deleteId: id, userId: isOptionUserId, notify }));
+    dispatch(deletePost(id));
   };
 
+  async function name() {
+    const fetchData = await fetch("http://localhost:3001/users/32/posts", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetchData.json();
+    console.log(response, "responsess");
+  }
+  name();
   return (
     <List>
-      <Snackbar />
-      {posts?.length !== 0 ? (
-        posts?.map((item: PostData) => {
-          return (
-            <Card
-              handleDeleteClick={handleDeleteClick}
-              key={item.id}
-              id={item.id?.toString() as string}
-              date={getFormatDate(item.createdAt as string)}
-              title={capitalizedString(item.title)}
-              description={item.description}
-            />
-          );
-        })
+      {posts?.posts?.length !== 0 ? (
+        posts?.posts?.map(
+          (item: PostData & { createdAt: string; id: string }) => {
+            return (
+              <Card
+                handleDeleteClick={handleDeleteClick}
+                key={item.id}
+                id={item.id}
+                date={item.createdAt}
+                title={item.title}
+                description={item.description}
+              />
+            );
+          }
+        )
       ) : (
         <div>У вас не постов</div>
       )}
@@ -52,7 +54,7 @@ export const PostList = () => {
 };
 
 const List = styled("div")`
-  width: 60%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;

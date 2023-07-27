@@ -7,19 +7,13 @@ export const Layout = () => {
   return (
     <LayoutStyled>
       <Header />
-      <Content>
-        <Outlet />
-      </Content>
+      <Outlet />
     </LayoutStyled>
   );
 };
 
 const LayoutStyled = styled("div")`
+  background-color: #353436;
   width: 100%;
-  background: white;
   min-height: 100vh;
-`;
-
-const Content = styled("div")`
-  padding: 20px 100px 0px 130px;
 `;

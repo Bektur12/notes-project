@@ -5,7 +5,6 @@ import { Post } from "../pages/posts/Post";
 import { SignUp } from "../pages/SIgnUp";
 import { SignIn } from "../pages/SignIn";
 import { CreatePost } from "../pages/posts/Create";
-import { InnerPage } from "../pages/posts/InnerPage";
 
 export const UserRoutes = () => {
   return (
@@ -15,7 +14,6 @@ export const UserRoutes = () => {
       <Route path="/" element={<Layout />}>
         <Route path="/user/post" element={<Post />} />
         <Route path="/user/create-post" element={<CreatePost />} />
-        <Route path="/user/inner-page/:id" element={<InnerPage />} />
       </Route>
     </Routes>
   );
