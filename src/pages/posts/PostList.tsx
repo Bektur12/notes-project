@@ -17,7 +17,6 @@ export const PostList = () => {
   const { notify } = useSnackbar();
 
   const { posts = [] } = useAppSelector((state: RootState) => state.posts);
-  console.log(posts.length, "lenght", posts);
 
   const user = JSON.parse(localStorage.getItem("AUTH") as string);
 
