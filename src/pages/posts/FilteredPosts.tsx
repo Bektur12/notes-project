@@ -19,7 +19,7 @@ export const FilteredPosts = () => {
 
   const user = JSON.parse(localStorage.getItem("AUTH") as string);
 
-  const isOptionUserId = user.id;
+  const isOptionUserId = user?.id;
 
   const handleFilteredPosts = () => {
     dispatch(
