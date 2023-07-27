@@ -1,63 +1,125 @@
-import React, { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { Card } from "../../components/UI/Card";
-import styled from "@emotion/styled";
+import { styled } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { deletePost, getPosts } from "../../store/actions/post";
-import { PostData } from "../../types";
+import { PostData, RootState } from "../../types";
+import { getFormatDate } from "../../utils";
+import { capitalizedString } from "../../utils/constants";
+import { Snackbar } from "../../components/UI/SnackBar";
+import { Pagination } from "../../components/UI/Pagination";
+import { useSearchParams } from "react-router-dom";
+import { useSnackbar } from "../../hooks/useSnackbar";
 
 export const PostList = () => {
   const dispatch = useAppDispatch();
 
-  const { posts = [] } = useAppSelector((state: any) => state);
+  const { notify } = useSnackbar();
+
+  const { posts = [] } = useAppSelector((state: RootState) => state.posts);
+  console.log(posts.length, "lenght", posts);
+
+  const user = JSON.parse(localStorage.getItem("AUTH") as string);
+
+  const isOptionUserId = user.id;
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const currentPage = +(searchParams.get("page") || "1");
+
+  const itemsPerPage = 5;
 
   useEffect(() => {
-    dispatch(getPosts());
-  }, [dispatch]);
+    dispatch(
+      getPosts({
+        userId: isOptionUserId,
+        page: currentPage,
+        limit: itemsPerPage,
+      })
+    );
+  }, [currentPage, itemsPerPage, isOptionUserId, dispatch]);
 
   const handleDeleteClick = (id: string) => {
-    dispatch(deletePost(id));
+    dispatch(
+      deletePost({
+        deleteId: id,
+        userId: isOptionUserId,
+        notify,
+        page: currentPage,
+        limit: itemsPerPage,
+      })
+    );
   };
 
-  async function name() {
-    const fetchData = await fetch("http://localhost:3001/users/32/posts", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const response = await fetchData.json();
-    console.log(response, "responsess");
-  }
-  name();
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setSearchParams({ page: (currentPage - 1).toString() });
+    }
+  };
+  const handleNextPage = () => {
+    setSearchParams({ page: (currentPage + 1).toString() });
+  };
+
   return (
-    <List>
-      {posts?.posts?.length !== 0 ? (
-        posts?.posts?.map(
-          (item: PostData & { createdAt: string; id: string }) => {
-            return (
-              <Card
-                handleDeleteClick={handleDeleteClick}
-                key={item.id}
-                id={item.id}
-                date={item.createdAt}
-                title={item.title}
-                description={item.description}
-              />
-            );
-          }
-        )
-      ) : (
-        <div>У вас не постов</div>
-      )}
-    </List>
+    <>
+      <Snackbar />
+      <List>
+        <InnerContent>
+          {posts?.length !== 0 ? (
+            posts
+              ?.slice(
+                (currentPage - 1) * itemsPerPage,
+                currentPage * itemsPerPage
+              )
+              .map((item: PostData) => (
+                <Card
+                  handleDeleteClick={handleDeleteClick}
+                  key={item.id}
+                  id={item.id?.toString() as string}
+                  date={getFormatDate(item.createdAt as string)}
+                  title={capitalizedString(item.title)}
+                  description={item.description}
+                />
+              ))
+          ) : (
+            <NotPost>У вас нет постов</NotPost>
+          )}
+        </InnerContent>
+        <PaginationWrapper>
+          <Pagination
+            totalPages={Math.ceil(posts.length / itemsPerPage)}
+            currentPage={currentPage}
+            handlePrevPage={handlePrevPage}
+            handleNextPage={handleNextPage}
+          />
+        </PaginationWrapper>
+      </List>
+    </>
   );
 };
 
 const List = styled("div")`
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+`;
+
+const InnerContent = styled("div")`
+  width: 60%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
+`;
+
+const PaginationWrapper = styled("div")`
+  margin-top: 16px;
+  display: flex;
+  width: 60%;
   justify-content: center;
-  align-content: center;
+`;
+
+const NotPost = styled("span")`
+  text-align: center;
+  text-transform: uppercase;
 `;

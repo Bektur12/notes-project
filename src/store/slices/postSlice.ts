@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getPosts } from "../actions/post";
+import { filteredPosts, getPosts } from "../actions/post";
 import { PostData } from "../../types";
 
 type State = {
@@ -14,8 +14,10 @@ export const postSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getPosts.fulfilled, (state, action) => {
-      state.posts = action.payload;
+      state.posts = action.payload as any;
     });
-    builder.addCase(getPosts.rejected, (state, action) => {});
+    builder.addCase(filteredPosts.fulfilled, (state, action) => {
+      state.posts = action.payload.posts;
+    });
   },
 });
