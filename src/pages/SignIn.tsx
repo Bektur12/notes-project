@@ -1,60 +1,52 @@
 import styled from "@emotion/styled";
+import React, { ChangeEvent, useState } from "react";
 import { Input } from "../components/UI/Input";
 import { InputPassword } from "../components/UI/InputPassword";
 import { Button } from "../components/UI/Button";
 import { loginUser } from "../store/actions/auth";
 import { useAppDispatch } from "../hooks/useDispatch";
 import { useNavigate } from "react-router";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { getMessage, patternValidation } from "../utils/constants";
-import { IuserData } from "../types";
 
 export const SignIn = () => {
   const dispatch = useAppDispatch();
 
-  const navigateToSignUp = useNavigate();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
   const navigate = useNavigate();
 
-  const onSendingData: SubmitHandler<FieldValues> = (data) => {
-    dispatch(loginUser({ ...data, navigate } as IuserData));
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
+  const onSendingData = () => {
+    dispatch(loginUser({ ...formData, navigate }));
+  };
   return (
     <Container>
       <InnerContainer>
         <Title>Login</Title>
         <Input
-          {...register("username", {
-            required: "Username is required",
-          })}
-          placeholder="Username"
+          value={formData.username}
+          onChange={handleInputChange}
           name="username"
-          error={getMessage(errors, "username") ? true : false}
-          helperText={getMessage(errors, "username")}
         />
-
         <InputPassword
-          {...register("password", {
-            required: "Password is required",
-            pattern: patternValidation.pattern,
-          })}
-          placeholder="Password"
+          label="Password"
           name="password"
-          error={getMessage(errors, "password") ? true : false}
-          helperText={getMessage(errors, "password")}
+          value={formData.password}
+          onChange={handleInputChange}
         />
-
-        <Button variant="contained" onClick={handleSubmit(onSendingData)}>
+        <Button variant="contained" onClick={onSendingData}>
           Login
         </Button>
-        <SignUp onClick={() => navigateToSignUp("/")}>
+        <SignUp>
           <p>Зарегистрироваться</p>
         </SignUp>
       </InnerContainer>
@@ -95,8 +87,6 @@ const SignUp = styled("div")`
   color: #ffffff;
   font-size: 14px;
   margin-top: 16px;
-  font-family: Inter;
-  cursor: pointer;
 
   & > p {
     margin: 0;
@@ -112,11 +102,4 @@ const SignUp = styled("div")`
       text-decoration: underline;
     }
   }
-`;
-
-const InputContainer = styled("div")`
-  display: flex;
-  flex-direction: column;
-  gap: 11px;
-  height: 100px;
 `;

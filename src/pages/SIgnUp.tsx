@@ -1,28 +1,31 @@
 import styled from "@emotion/styled";
+import React, { ChangeEvent, useState } from "react";
 import { Input } from "../components/UI/Input";
 import { InputPassword } from "../components/UI/InputPassword";
 import { Button } from "../components/UI/Button";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../store/actions/auth";
 import { useAppDispatch } from "../hooks/useDispatch";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { getMessage, patternValidation } from "../utils/constants";
-import { IuserData } from "../types";
 
 export const SignUp = () => {
-  const navigateToSignIn = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
-  const handleSendingData: SubmitHandler<FieldValues> = (data) => {
-    dispatch(
-      registerUser({ ...data, navigate: navigateToSignIn } as IuserData)
-    );
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const onSendingData = () => {
+    dispatch(registerUser({ ...formData, navigate }));
   };
 
   return (
@@ -30,30 +33,23 @@ export const SignUp = () => {
       <InnerContainer>
         <Title>Sign Up</Title>
         <Input
-          {...register("username", { required: "Username is required" })}
-          placeholder="Username"
-          error={getMessage(errors, "username") ? true : false}
-          helperText={getMessage(errors, "username")}
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleInputChange}
         />
-
         <InputPassword
-          {...register("password", {
-            required: "Password is required",
-            pattern: patternValidation.pattern,
-          })}
-          placeholder="Password"
-          error={getMessage(errors, "password") ? true : false}
-          helperText={getMessage(errors, "password")}
+          name="password"
+          label="Password"
+          value={formData.password}
+          onChange={handleInputChange}
         />
-
-        <Button variant="contained" onClick={handleSubmit(handleSendingData)}>
+        <Button variant="contained" onClick={onSendingData}>
           Sign Up
         </Button>
         <SignIn>
           <p>У вас есть аккаунт?</p>
-          <NavigateToSignIn onClick={() => navigateToSignIn("/sign-in")}>
-            Sign In
-          </NavigateToSignIn>
+          <p onClick={() => navigate("/sign-in")}>Sign In</p>
         </SignIn>
       </InnerContainer>
     </Container>
@@ -93,7 +89,6 @@ const SignIn = styled("div")`
   color: #ffffff;
   font-size: 14px;
   margin-top: 16px;
-  font-family: Inter;
 
   & > p {
     margin: 0;
@@ -109,8 +104,4 @@ const SignIn = styled("div")`
       text-decoration: underline;
     }
   }
-`;
-
-const NavigateToSignIn = styled("p")`
-  cursor: pointer;
 `;

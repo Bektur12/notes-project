@@ -1,29 +1,45 @@
-import React, { forwardRef, Ref } from "react";
+import React, { FC } from "react";
 import { InputAdornment, TextField, TextFieldProps } from "@mui/material";
 import { ReactComponent as SearchIcon } from "../../assets/svg/searchIcon.svg";
-import { styled } from "@mui/material";
+
+import styled from "@emotion/styled";
 
 type InputProps = TextFieldProps & {
   isIcon?: boolean;
 };
 
-export const Input = forwardRef(
-  ({ isIcon, ...rest }: InputProps, ref: Ref<HTMLInputElement>) => {
-    const viewIconHandler = () => {
-      if (isIcon === true) {
-        return {
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        };
-      }
-    };
+export const Input: FC<InputProps> = ({
+  value,
+  onChange,
+  type,
+  placeholder,
+  isIcon,
+  name,
+}) => {
+  const viewIconHandler = () => {
+    if (isIcon === true) {
+      return {
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchIcon />
+          </InputAdornment>
+        ),
+      };
+    }
+  };
 
-    return <InputStyled ref={ref} {...rest} InputProps={viewIconHandler()} />;
-  }
-);
+  return (
+    <InputStyled
+      value={value}
+      onChange={onChange}
+      type={type}
+      name={name}
+      fullWidth
+      placeholder={placeholder}
+      InputProps={viewIconHandler()}
+    />
+  );
+};
 
 const InputStyled = styled(TextField)(() => ({
   ".MuiOutlinedInput-root": {
@@ -38,12 +54,5 @@ const InputStyled = styled(TextField)(() => ({
   },
   "& .MuiOutlinedInput-input": {
     padding: "10px 10px !important",
-  },
-  "& .MuiFormHelperText-root": {
-    background: "red",
-    lineHeight: "0",
-    marginTop: "10px",
-    position: "absolute",
-    top: "43px",
   },
 }));

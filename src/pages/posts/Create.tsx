@@ -1,22 +1,15 @@
-import { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { Input } from "../../components/UI/Input";
 import { styled } from "@mui/material";
 import { TextArea } from "../../components/UI/TextArea";
 import { Button } from "../../components/UI/Button";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { postUser } from "../../store/actions/post";
-import { useNavigate } from "react-router";
-import { capitalizedString } from "../../utils/constants";
-import { useSnackbar } from "../../hooks/useSnackbar";
 
 export const CreatePost = () => {
   const dispatch = useAppDispatch();
-
-  const { notify } = useSnackbar();
-
-  const navigate = useNavigate();
-
-  const { user } = useAppSelector((state: any) => state.auth);
+  const { id } = useAppSelector((state: any) => state.auth);
+  console.log(id, "iiiid");
 
   const [data, setData] = useState({
     title: "",
@@ -34,23 +27,13 @@ export const CreatePost = () => {
   };
 
   const handleClickData = () => {
-    if (!data.title.trim() && !data.description.trim()) return;
-
-    dispatch(
-      postUser({
-        ...data,
-        userId: user.id,
-        navigate,
-        title: capitalizedString(data.title),
-        notify,
-      })
-    );
+    dispatch(postUser({ ...data, userId: id }));
   };
-
   return (
     <Container>
       <Block>
         <h1>Create Note</h1>
+
         <Input
           value={data.title}
           onChange={handleTitleChange}
@@ -71,14 +54,14 @@ const Container = styled("div")`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
 `;
 
 const Block = styled("div")`
   width: 30%;
   display: grid;
   grid-template-rows: 20% 20% 40% 30%;
-  gap: 13px;
+  gap: 10px;
   h1 {
     font-family: "Inter";
     font-style: normal;
